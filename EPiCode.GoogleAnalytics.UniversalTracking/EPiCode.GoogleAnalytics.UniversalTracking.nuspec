@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>EPiCode.GoogleAnalytics.UniversalTracking</id>
+        <version>$version$</version>
+        <title>Google Analytics Universal Tracking support to help create tracking script</title>
+        <authors>The EPiCode Community</authors>
+        <projectUrl>https://www.coderesort.com/p/epicode/browser/</projectUrl>
+        <iconUrl>http://www.coderesort.com/favicon.ico</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A simple API to help you create valid javascript to be used with Universal Tracking for Google Analytics. Supports the Enhanced Ecommerce plugin.</description>
+        <releaseNotes />
+    </metadata>
+</package>
