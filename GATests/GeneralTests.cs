@@ -159,5 +159,68 @@ namespace GATests
             Assert.AreEqual(fact, json);
 
         }
+
+        [TestMethod]
+        public void Verify_Full_Promotion_Impression_Is_Formatted_Correctly()
+        {
+            // Arrange
+            Tracking tracking = new Tracking();
+
+            // Act
+            string json = tracking.TrackPromotionImpression("PROMO1", "Summer Sale", "summer_banner_1", "top");
+
+            // Inspect
+            Debug.WriteLine(json);
+
+            // Assert
+            string fact =
+                "ga(\"ec:addPromo\",{\"id\":\"PROMO1\",\"name\":\"Summer Sale\",\"creative\":\"summer_banner_1\",\"position\":\"top\"});";
+            Assert.AreEqual(fact, json);
+
+        }
+        
+        [TestMethod]
+        public void Verify_Partial_Promotion_Impression_Is_Formatted_Correctly()
+        {
+            // Arrange
+            Tracking tracking = new Tracking();
+
+            // Act
+            string json = tracking.TrackPromotionImpression("PROMO1", "Summer Sale", "summer_banner_1");
+
+            // Inspect
+            Debug.WriteLine(json);
+
+            // Assert
+            string fact =
+                "ga(\"ec:addPromo\",{\"id\":\"PROMO1\",\"name\":\"Summer Sale\",\"creative\":\"summer_banner_1\"});";
+            Assert.AreEqual(fact, json);
+        }
+
+
+        [TestMethod]
+        public void Verify_Full_Promotion_Click_Is_Formatted_Correctly()
+        {
+            // Arrange
+            Tracking tracking = new Tracking();
+
+            // Act
+            string json = tracking.TrackPromotionClick("PROMO1", "Summer Sale", "summer_banner_1", "top", "My Promos");
+
+            // Inspect
+            Debug.WriteLine(json);
+
+            // Assert
+            string fact =
+                "ga(\"ec:addPromo\",{\"id\":\"PROMO1\",\"name\":\"Summer Sale\",\"creative\":\"summer_banner_1\",\"position\":\"top\"});";
+            fact = fact + "\r\n";
+            fact = fact + "ga(\"ec:setAction\",\"promo_click\");";
+            fact = fact + "\r\n";
+            fact = fact + "ga(\"send\", \"event\", \"My Promos\", \"click\", \"Summer Sale\");";
+
+            Assert.AreEqual(fact, json);
+
+        }
+
     }
 }

@@ -5,7 +5,7 @@
         <version>$version$</version>
         <title>Google Analytics Universal Tracking support to help create tracking script</title>
         <authors>The EPiCode Community</authors>
-        <projectUrl>https://www.coderesort.com/p/epicode/browser/</projectUrl>
+        <projectUrl>https://github.com/EPiServerNorway/UniversalTrackingHelper/</projectUrl>
         <iconUrl>http://www.coderesort.com/favicon.ico</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>A simple API to help you create valid javascript to be used with Universal Tracking for Google Analytics. Supports the Enhanced Ecommerce plugin.</description>

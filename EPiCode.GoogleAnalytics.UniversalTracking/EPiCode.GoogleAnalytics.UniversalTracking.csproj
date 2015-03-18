@@ -51,6 +51,7 @@
     <Compile Include="EnhancedEcommerceActions.cs" />
     <Compile Include="FieldObjects\ImpressionFieldObject.cs" />
     <Compile Include="FieldObjects\ProductFieldObject.cs" />
+    <Compile Include="FieldObjects\PromotionFieldObject.cs" />
     <Compile Include="GoogleAnalyticsTracking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

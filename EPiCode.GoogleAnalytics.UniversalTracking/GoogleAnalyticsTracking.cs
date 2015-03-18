@@ -1,4 +1,5 @@
-﻿using EPiCode.GoogleAnalyticsTracking.FieldObjects;
+﻿using System;
+using EPiCode.GoogleAnalyticsTracking.FieldObjects;
 
 namespace EPiCode.GoogleAnalyticsTracking
 {
@@ -29,6 +30,36 @@ namespace EPiCode.GoogleAnalyticsTracking
         public string Require(string library)
         {
             return string.Format("ga(\"require\",\"{0}\");", library);
+        }
+
+        /// <summary>
+        /// Sends the event.
+        /// </summary>
+        /// <param name="category">The category. Example: "button"</param>
+        /// <param name="action">The action. Example: "click"</param>
+        /// <param name="label">The label. Example: "nav buttons"</param>
+        /// <param name="value">The value. Must be a positive numbers. Negative numbers are stripped from the call</param>
+        /// <returns></returns>
+        public string SendEvent(string category, string action, string label = null, int value = -1)
+        {
+            if (category == null) throw new ArgumentNullException("category");
+            if (action == null) throw new ArgumentNullException("action");
+            /*
+                Category	String	Yes	Typically the object that was interacted with (e.g. button)
+                Action	String	Yes	The type of interaction (e.g. click)
+                Label	String	No	Useful for categorizing events (e.g. nav buttons)
+                Value	Number	No	Values must be non-negative. Useful to pass counts (e.g. 4 times)
+            */
+            string parameters = string.Format("\"event\", \"{0}\", \"{1}\"", category, action);
+            if(string.IsNullOrEmpty(label) == false)
+            {
+                parameters = parameters + ", \"" + label + "\"";
+            }
+            if (value >= 0)
+            {
+                parameters = parameters + ", " + value.ToString();
+            }
+            return string.Format("ga(\"send\", {0});", parameters);
         }
 
 
@@ -103,5 +134,39 @@ namespace EPiCode.GoogleAnalyticsTracking
             return impression.ToString("ec:addProduct");
         }
 
+
+        /// <summary>
+        /// Tracks a promotion impression.
+        /// </summary>
+        /// <remarks>
+        /// id or name must be provided.
+        /// </remarks>
+        /// <param name="id">The promotion identifier.</param>
+        /// <param name="name">The promotion name.</param>
+        /// <param name="creative">The creative name of the promotion, typically a banner id. Optional</param>
+        /// <param name="position">The promotion position on the page. Optional</param>
+        /// <returns></returns>
+        /// <see cref="https://developers.google.com/analytics/devguides/collection/analyticsjs/enhanced-ecommerce#measuring-promos"/>
+        public string TrackPromotionImpression(string id, string name, string creative = null, string position = null)
+        {
+            PromotionFieldObject impression = new PromotionFieldObject()
+            {
+                Id = id,
+                Name = name,
+                Creative = creative,
+                Position = position
+            };
+
+            return impression.ToString("ec:addPromo");
+        }
+
+        public string TrackPromotionClick(string id, string name, string creative = null, string position = null, string eventName = "Internal Promotions")
+        {
+            string impression = TrackPromotionImpression(id, name, creative, position);
+            string action = SetAction(EnhancedEcommerceActions.promo_click);
+            // ga('send', 'event', 'Internal Promotions', 'click', 'Summer Sale');
+            string sendEvent = SendEvent(eventName, "click", name);
+            return string.Format("{0}\r\n{1}\r\n{2}", impression, action, sendEvent);
+        }
     }
 }

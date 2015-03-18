@@ -50,7 +50,7 @@ namespace EPiCode.GoogleAnalyticsTracking.FieldObjects
         {
             if(string.IsNullOrEmpty(Id) && string.IsNullOrEmpty(Name))
             {
-                throw new ArgumentNullException("Id or Name must be set");
+                throw new ArgumentNullException("Id", "Id or Name must be set");
             }
 
             return base.ToString();
